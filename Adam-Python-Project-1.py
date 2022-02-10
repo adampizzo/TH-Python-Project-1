@@ -59,14 +59,14 @@ def evaluate_guess(answer):
             if type(guess) != int:
                 raise ValueError
             elif guess < 1 or guess > 10:
-                raise GuessOutOfRangeError("Oh no! That guess was not between 1 and 10.")
+                raise GuessOutOfRangeError("\n{} is not between 1 and 10. Try Again.\n".format(guess))
             elif guess > answer:
-                raise GuessTooHigh("It's lower")
+                raise GuessTooHigh("\nThe secret number is lower.\n")
             elif guess < answer:
-                raise GuessTooLow("It's higher")
+                raise GuessTooLow("\nThe secret number is higher.\n")
             break
         except ValueError:
-            print("That guess was not a valid number, please try again.")            
+            print("\n{} not a valid number, please try again.\n".format(guess))            
         except GuessOutOfRangeError as err:
             print(err)
         except GuessTooHigh as err:
@@ -76,7 +76,7 @@ def evaluate_guess(answer):
             wrong_guess_counter += 1
             print(err)
 
-    print("Got it")
+    print("\nYou Got it!\n")
     sleep()        
     print_score(wrong_guess_counter)
     sleep()
