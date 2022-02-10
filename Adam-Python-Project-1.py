@@ -22,7 +22,7 @@ def sleep():
     time.sleep(.75)
 
 
-def evaluate_score(score):           
+def print_score(score):           
     if score == 1:
         print("You guessed it in only {} guess, no beating that!\n".format(score))
         sleep()
@@ -78,7 +78,7 @@ def evaluate_guess(answer):
 
     print("Got it")
     sleep()        
-    evaluate_score(wrong_guess_counter)
+    print_score(wrong_guess_counter)
     sleep()
     return wrong_guess_counter
 
@@ -119,13 +119,10 @@ def start_game():
             sleep()
             print("When you finally guess the number correctly we will let you know how many guesses it took.\n")
             sleep()        
-        solution = random.randint(1,10)        
+        solution = random.randint(1,10)               
         if high_score != 9999:
             print("The high score is currently: {}.\n".format(high_score))
-            sleep()
-        elif high_score == 1:
-            print("The high score is currently 1.\n")
-            sleep()
+            sleep()   
         player_score = evaluate_guess(solution)
         high_score = evaluate_high_score(player_score, high_score)
         keep_playing = continue_game(rounds)
