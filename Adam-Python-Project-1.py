@@ -21,7 +21,8 @@ import time
 def sleep():
     time.sleep(.75)
 
-def determine_score(score):           
+
+def evaluate_score(score):           
     if score == 1:
         print("You guessed it in only {} guess, no beating that!\n".format(score))
         sleep()
@@ -30,16 +31,24 @@ def determine_score(score):
         sleep()
 
 
-def set_high_score(score, high_score):
-    print("The previous high score was: {}...".format(high_score))
-    if score < high_score:
-        print("But it looks like you just beat it with your score of: {}\nGreat Job!\n".format(score))
-        sleep()
+def evaluate_high_score(score, high_score):
+    if high_score == 9999:
+        print("You have set the high score at: {}\nCongratulations!\n".format(score))
         return score
-    else:
-        print("And the record is still intact!\nBetter luck next time!")
-        sleep()
-        return high_score   
+    else: 
+        print("The previous high score was: {}...".format(high_score))
+        if score < high_score:
+            print("But it looks like you just beat it with your score of: {}\nGreat Job!\n".format(score))
+            sleep()
+            return score
+        elif score == high_score:
+            print("It looks like you tied the high score at: {}.\nSo close!\n".format(high_score))
+            sleep()
+            return high_score
+        else:
+            print("And the record is still intact!\nBetter luck next time!\n")
+            sleep()
+            return high_score   
 
 
 def evaluate_guess(answer):    
@@ -69,15 +78,12 @@ def evaluate_guess(answer):
 
     print("Got it")
     sleep()        
-    determine_score(wrong_guess_counter)
+    evaluate_score(wrong_guess_counter)
     sleep()
     return wrong_guess_counter
 
-            
 
-
-
-def continue_game():
+def continue_game(num_rounds):
     while True:        
         try:
             question = input("Do you want to play the game again? (Y/N)\n")
@@ -89,48 +95,41 @@ def continue_game():
         else:
             if question.lower() == "y":
                 print("Great! New game starting shortly!\n")
-                time.sleep(1)
+                sleep()
                 return True
             elif question.lower() == "n":
-                print("Thank you for playing! Game ending shortly!")
-                time.sleep(1)
+                if num_rounds == 1:
+                    print("You played for {} round.\n".format(num_rounds))
+                else:
+                    print("You played for {} rounds.\n".format(num_rounds))
+                sleep()
+                print("Game ending. Thank you for playing.")
+                sleep()
                 return False
                 
    
 def start_game():
     keep_playing = True
-    high_score = 10
-    
-    while keep_playing:
-        #1. Display an intro/welcome message to the player.
-        print(("="*40) , "> Welcome To The Number Guessing Game <" , ("="*40) , "\nThe objective of this game is to guess a random number between 1 and 10.")
-        sleep()
-        print("When you finally guess the number correctly we will let you know how many guesses it took.")
-        #2. Store a random number as the answer/solution.
-        solution = random.randint(1,10)
-        print(solution)
-        #3. Continuously prompt the player for a guess.
-        
+    high_score = 9999
+    rounds = 1    
+    while keep_playing:       
+        print(("="*40) , "> Welcome To The Number Guessing Game <" , ("="*40))
+        if rounds == 1:
+            print("\nThe objective of this game is to guess a random number between 1 and 10.")
+            sleep()
+            print("When you finally guess the number correctly we will let you know how many guesses it took.\n")
+            sleep()        
+        solution = random.randint(1,10)        
+        if high_score != 9999:
+            print("The high score is currently: {}.\n".format(high_score))
+            sleep()
+        elif high_score == 1:
+            print("The high score is currently 1.\n")
+            sleep()
         player_score = evaluate_guess(solution)
-        high_score = set_high_score(player_score, high_score)
-        keep_playing = continue_game()
-
-        
-
+        high_score = evaluate_high_score(player_score, high_score)
+        keep_playing = continue_game(rounds)
+        rounds += 1
 
 
-    #   a. If the guess greater than the solution, display to the player "It's lower".
-
-    #   b. If the guess is less than the solution, display to the player "It's higher".
-
-    #4. Once the guess is correct, stop looping, inform the user they "Got it" and show how many attempts it took them to get the correct number.
-
-    #5. Let the player know the game is ending, or something that indicates the game is over. ( You can add more features/enhancements if you'd like to. )
-
-    
-    
-
-
-
-# Kick off the program by calling the start_game function.
 start_game()
