@@ -8,6 +8,9 @@ For this first project we will be using Workspaces.
 NOTE: If you strongly prefer to work locally on your own computer, you can totally do that by clicking: File -> Download Workspace in the file menu after you fork the snapshot of this workspace.
 
 """
+import random
+import time
+
 class GuessOutOfRangeError(Exception):
     pass
 class GuessTooLow(Exception):
@@ -15,8 +18,7 @@ class GuessTooLow(Exception):
 class GuessTooHigh(Exception):
     pass
 
-import random
-import time
+
 
 def sleep():
     time.sleep(.75)
@@ -55,7 +57,8 @@ def evaluate_guess(answer):
     wrong_guess_counter = 1
     while True:        
         try:
-            guess = int(input("Guess a number between 1 and 10:\n"))            
+            guess = input("Guess a number between 1 and 10:\n")
+            guess = int(guess)
             if type(guess) != int:
                 raise ValueError
             elif guess < 1 or guess > 10:
