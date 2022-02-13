@@ -23,6 +23,7 @@ class AlreadyGuessed(Exception):
 
 
 def sleep():
+    '''Function used to sleep a line for half a second.'''
     time.sleep(.5)
 
 
@@ -65,7 +66,7 @@ def get_guess():
         except UnboundLocalError:
             print("Define Guess First")
         except ValueError:            
-            print(f"\n{guess} not a valid number, please try again.\n")
+            print(f"\n{guess} is not a valid number, please try again.\n")
         except GuessOutOfRangeError as err:
             print(err)
         else:
